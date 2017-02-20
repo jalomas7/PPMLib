@@ -1,2 +1,2 @@
 # PPMLib
-opensource ppm image reading and writing library written in C. 
+opensource C library for reading, writing, and manipulating ppm images
