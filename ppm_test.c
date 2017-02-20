@@ -21,7 +21,7 @@
 
 int main(int argc, char **argv){
 
-    PPM image = dnew_PPM(500, 500);
+    PPM image = PPM_dnew(500, 500);
     RGB white = new_RGB(255,255,255);
 
     for(int i =0; i < 500; i++){
@@ -29,6 +29,6 @@ int main(int argc, char **argv){
         image->data[(500*(500-i))+i] = white;
     }
 
-    swrite_PPM("X.ppm", image);
+    PPM_swrite("X.ppm", image);
     return 0;
 }

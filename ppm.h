@@ -19,6 +19,7 @@
  
 #include <stdio.h>
 typedef unsigned char uchar;
+
 typedef struct rgb {
    uchar R,G,B;
 } RGB;
@@ -30,19 +31,20 @@ typedef struct ppm {
 
 RGB new_RGB(uchar R, uchar G, uchar B);
 
-//generates a PPM object from the file fp
-PPM fnew_PPM(FILE *fp);
-PPM snew_PPM(const char *fn);
+//generates a new PPM object
+PPM PPM_fnew(FILE *fp);
+PPM PPM_snew(const char *fn);
+PPM PPM_dnew(int w, int h);
 
-//generate a PPM object from scratch
-PPM dnew_PPM(int w, int h);
+void PPM_free(PPM image);
+
+//ppm reading and writing
+void PPM_fread(FILE *fp, PPM image);
+void PPM_sread(const char *fn, PPM image);
+void PPM_fwrite(FILE *fp, PPM image);
+void PPM_swrite(const char *fn, PPM image);
 
 //clears image to color
-void apply_color(PPM image, RGB color);
-void free_PPM(PPM image);
-void fread_PPM(FILE *fp, PPM image);
-void sread_PPM(const char *fn, PPM image);
-void fwrite_PPM(FILE *fp, PPM image);
-void swrite_PPM(const char *fn, PPM image);
+void PPM_apply_color(PPM image, RGB color);
 
 #endif //PPM_H

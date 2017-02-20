@@ -27,7 +27,8 @@ RGB new_RGB(uchar R, uchar G, uchar B){
 
 //creates a new PPM object from fp, assumes 
 //only the P6 file format of maxsize 255
-PPM fnew_PPM(FILE *fp){ 
+//TODO: support for raw type and maxsize > 255
+PPM PPM_fnew(FILE *fp){ 
     int width, height, maxsize;
     char type[2];
     PPM image;
@@ -53,14 +54,14 @@ PPM fnew_PPM(FILE *fp){
     return image;
 }
 
-PPM snew_PPM(const char *fn){
+PPM PPM_snew(const char *fn){
     FILE *fp;
     if((fp = fopen(fn, "r"))==NULL) return NULL;
-    PPM image = fnew_PPM(fp);
+    PPM image = PPM_fnew(fp);
     fclose(fp); return image;
 }
 
-PPM dnew_PPM(int w, int h){
+PPM PPM_dnew(int w, int h){
     PPM image = malloc(sizeof(struct ppm));
     image->width = w;
     image->height = h;
@@ -74,7 +75,7 @@ PPM dnew_PPM(int w, int h){
     return image;
 }
 
-void free_PPM(PPM image){
+void PPM_free(PPM image){
     if(!image) return;
     if(image->data){
         free(image->data);
@@ -82,30 +83,30 @@ void free_PPM(PPM image){
     free(image);
 }
 
-void fread_PPM(FILE *fp, PPM image){
-    free_PPM(image);
-    image = fnew_PPM(fp);
+void PPM_fread(FILE *fp, PPM image){
+    PPM_free(image);
+    image = PPM_fnew(fp);
 }
 
-void sread_PPM(const char *fn, PPM image){
-    free_PPM(image);
-    image = snew_PPM(fn);
+void PPM_sread(const char *fn, PPM image){
+    PPM_free(image);
+    image = PPM_snew(fn);
 }
 
 //write image to fp, assumes fp is good
-void fwrite_PPM(FILE *fp, PPM image){
+void PPM_fwrite(FILE *fp, PPM image){
    fprintf(fp, "P6\n%d %d\n255\n", image->width, image->height);
    fwrite(image->data, sizeof(RGB), image->width*image->height, fp);
 }
 
-void swrite_PPM(const char *fn, PPM image){
+void PPM_swrite(const char *fn, PPM image){
     FILE *fp;
     if((fp=fopen(fn, "w"))==NULL) return;
-    fwrite_PPM(fp, image);
+    PPM_fwrite(fp, image);
     fclose(fp);
 }
 
-void apply_color(PPM image, RGB color){
+void PPM_apply_color(PPM image, RGB color){
     for(int i=0; i < image->width*image->height; i++){
         image->data[i] = color;
     }
