@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 //this file generates a 500x500 white on black x
 //and outputs it to X.ppm
 #include "ppm.h"
