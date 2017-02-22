@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -Wall
+CFLAGS = -O3
 LDFLAGS = -lm
 EXES = ppmtest
 

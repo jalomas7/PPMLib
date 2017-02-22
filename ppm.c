@@ -34,10 +34,13 @@ PPM PPM_fnew(FILE *fp){
     char type[2];
     PPM image;
 
-    fscanf(fp, "%s\n%d %d\n%d\n", type,  &width, &height, &maxsize);
+    int i=fscanf(fp, "%s\n%d %d\n%d\n", type,  &width, &height, &maxsize);
+    if(i<3){
+        image = NULL;
+        return image;
+    }
 
     if(strcmp(type, "P6") != 0){
-        fputs("not a PPM file\n", stderr);
         image = NULL;
         return image;
     }
@@ -48,8 +51,7 @@ PPM PPM_fnew(FILE *fp){
     image->data = malloc(width*height*sizeof(struct rgb));
 
     if(fread(image->data, sizeof(struct rgb), width*height, fp) != width*height){
-        fputs("could not read PPM file\n", stderr);
-        image = NULL;
+        PPM_free(image);
     }
 
     return image;
